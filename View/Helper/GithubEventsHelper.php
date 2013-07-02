@@ -1,5 +1,6 @@
 <?php /* /GithubEventsWidget/View/Helper/GithubEventsHelper.php */
 App:: uses('AppHelper', 'View/Helper');
+App::import('Helper', 'Html');
 
 /**
  * Cake Events Widget helper
@@ -20,6 +21,8 @@ App:: uses('AppHelper', 'View/Helper');
  */
 class GithubEventsHelper extends AppHelper {
 
+    public $helpers = array('Html');
+    
 /**
  * Outputs the Github Events Widget
  * 
@@ -32,7 +35,46 @@ class GithubEventsHelper extends AppHelper {
     }
     
     public function renderAsList($events) {
-        return $this->_View->element('GithubEventsWidget.widget/events_list', $events);
+        return $this->_View->element('GithubEventsWidget.widget/event_list', $events);
+    }
+    
+    public function renderIcon($type) {
+        $type = strtolower(str_replace('Event', '', $type));
+        $icnMap = array(
+            'create' => 'icon-code-fork',
+            'fork'   => 'icon-code-fork',
+            'watch'  => 'icon-star',
+            'gist'   => 'icon-map-marker',
+            'issues'        => 'icon-bug',
+            'issuecomment'  => 'icon-comments-alt'
+        );
+        return "<i class='{$icnMap[$type]}'>&nbsp;</i>";
+    }
+    
+    public function renderActionText($event) {
+        $type = strtolower(str_replace('Event', '', $event['type']));
+        
+        if ($event['repo'])
+            $repo = &$event['repo'];
+        if ($event['payload'])
+            $payload = &$event['payload'];
+        $txtMap = array(
+            'gist'   => 'created a new gist ',
+            'issues'        => 'opened a new issue ',
+            'issuecomment'  => 'commented on an issue '
+        );
+        switch ($type) {
+            case 'create':
+                $txtMap[$type] = "created {$payload['ref_type']} <span class=\"label label-info\">{$payload['ref']}</span> {$this->Html->link($repo['name'], $repo['url'])}";
+                break;
+            case 'fork':
+                $txtMap[$type] = "forked {$this->Html->link($repo['name'], $repo['url'])} ";
+                break;
+            case 'watch':
+                $txtMap[$type] = "starred {$this->Html->link($repo['name'], $repo['url'])} ";
+                break;
+        }
+        return $txtMap[$type];
     }
     
 }

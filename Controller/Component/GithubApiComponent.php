@@ -54,7 +54,7 @@ class GithubApiComponent extends Component {
         $results = array();
         $i = 0;
         foreach ( $result as $key => $item) {
-            $acceptTypes = array('WatchEvent', 'PushEvent', 'GistEvent', 'CreateEvent', 'PublicEvent', 'IssuesEvent', 'IssueCommentEvent');
+            $acceptTypes = array('WatchEvent', 'PushEvent', 'GistEvent', 'CreateEvent', 'IssuesEvent', 'IssueCommentEvent');
             if ($i < $limit) {
                 if (in_array($item['type'], $acceptTypes)) {
                     $results[] = $item;

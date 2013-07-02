@@ -1,4 +1,4 @@
-<?php /* /GithubEventsWidget/View/Elements/widget/user-events.ctp */
+<?php /* /GithubEventsWidget/View/Elements/widget/event-list.ctp */
 /**
  * Template for the Github user events widget 
  * 
@@ -11,10 +11,13 @@
  * @link     http://chrisvogt.me
  */
 ?>
-                            <ul class="list-events">
+                            <ul id="list-events">
                             <?php foreach ($events as $key => $event) : ?> 
-                                <li>
+                                <li<?php echo (fmod($key, 2) ? '' : ' class="odd"'); ?>>
+                                    <?php echo $this->GithubEvents->renderIcon($event['type']); ?> 
+                                    <?php echo $this->GithubEvents->renderActionText($event); ?> 
 
+                                    <span><?php echo $this->Time->timeAgoInWords($event['created_at']); ?></span> 
                                 </li>
                             <?php endforeach; ?>
                             </ul>
