@@ -1,15 +1,16 @@
-<?php
+<?php /* /GithubEventsWidget/Controller/Component/GithubApiComponent.php */
+App::uses('HttpSocket', 'Network/Http');
+App::uses('Sanitize', 'Utility');
+
 /**
  * Cake 2.x Component to assist with consuming the Github API v3
  * 
  * @author   Chris Vogt <@c1v0>
  * @license  http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link     http://developer.github.com/v3/
  * @link     http://chrisvogt.me
- * @todo     [ ] Pagination | [WIP] Missing event types
+ * @link     http://developer.github.com/v3/
+ * @todo     [ ] pagination | [wip] missing event types
  */
-App::uses('HttpSocket', 'Network/Http');
-App::uses('Sanitize', 'Utility');
 
 /**
  * Github API consumer component for Cake
